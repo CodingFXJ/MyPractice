@@ -1,0 +1,200 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>烟花模拟器-青云博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#000000">
+</head>
+
+<body>
+
+  <script>
+    // if (-1 === document.cookie.indexOf('returning=true')) {
+
+    setTimeout("showHello()", 2000);
+    function showHello() {
+      swal({
+        title: '使用方法',
+        text: '1.你可以在右上角的“齿轮”设置烟花相关参数\n2.用手或者鼠标横向滑动下边界可以调节燃放速度哦！点击屏幕可以控制燃放数量\n3.电脑键盘快捷键： P-暂停 O-设置\n' + '',
+        type: 'success',
+        confirmButtonText: 'Nice!'
+      })
+      document.cookie = 'returning=true'; // set cookie
+    }
+
+	// }
+
+  </script>
+
+  <div class="container">
+
+    <div class="stage-container" style="width: 768px; height: 833px;">
+      <div class="canvas-container" style="background-color: rgb(0, 0, 0);">
+        <canvas id="trails-canvas" width="1536" height="1666"
+          style="touch-action: none; width: 768px; height: 833px;"></canvas>
+        <canvas id="main-canvas" width="1536" height="1666"
+          style="touch-action: none; width: 768px; height: 833px;"></canvas>
+      </div>
+      <div class="controls">
+        <div class="btn pause-btn">
+          <svg fill="white" width="24" height="24">
+            <use href="#icon-pause" xlink:href="#icon-pause"></use>
+          </svg>
+        </div>
+        <div class="btn sound-btn">
+          <svg fill="white" width="24" height="24">
+            <use href="#icon-sound-on" xlink:href="#icon-sound-on"></use>
+          </svg>
+        </div>
+        <div class="btn settings-btn">
+          <svg fill="white" width="24" height="24">
+            <use href="#icon-settings" xlink:href="#icon-settings"></use>
+          </svg>
+        </div>
+      </div>
+      <div class="menu hide">
+        <div class="menu__inner-wrap" style="opacity: 1;">
+          <div class="btn btn--bright close-menu-btn">
+            <svg fill="white" width="24" height="24">
+              <use href="#icon-close" xlink:href="#icon-close"></use>
+            </svg>
+          </div>
+          <div class="menu__header">设置</div>
+          <div class="menu__subheader" align="center">
+            青云博客：<a href="https://blog.qinglin.co" target="_blank">blog.qinglin.co</a><br>QQ号：<a
+              href="http://wpa.qq.com/msgrd?v=3&amp;uin=1422756921&amp;site=qq&amp;menu=yes"
+              target="_blank">1422756921<br><br><br>
+            </a><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1422756921&amp;site=qq&amp;menu=yes"><img
+                src="http://q1.qlogo.cn/g?b=qq&amp;nk=1422756921&amp;s=160" class="logo"></a>
+            <br>
+            <br>
+          </div>
+          <form>
+            <div class="form-option form-option--select">
+              <label class="shell-type-label">烟花类型</label>
+              <select class="shell-type">
+                <option value="Random">Random</option>
+                <option value="Crackle">Crackle</option>
+                <option value="Crossette">Crossette</option>
+                <option value="Crysanthemum">Crysanthemum</option>
+                <option value="Falling Leaves">Falling Leaves</option>
+                <option value="Floral">Floral</option>
+                <option value="Ghost">Ghost</option>
+                <option value="Horse Tail">Horse Tail</option>
+                <option value="Palm">Palm</option>
+                <option value="Ring">Ring</option>
+                <option value="Strobe">Strobe</option>
+                <option value="Willow">Willow</option>
+              </select>
+            </div>
+            <div class="form-option form-option--select">
+              <label class="shell-size-label">烟花大小</label>
+              <select class="shell-size">
+                <option value="0">3"</option>
+                <option value="1">4"</option>
+                <option value="2">6"</option>
+                <option value="3">8"</option>
+                <option value="4">12"</option>
+                <option value="5">16"</option>
+              </select>
+            </div>
+            <div class="form-option form-option--select">
+              <label class="quality-ui-label">画质</label>
+              <select class="quality-ui">
+                <option value="1">低</option>
+                <option value="2">正常</option>
+                <option value="3">高</option>
+              </select>
+            </div>
+            <div class="form-option form-option--select">
+              <label class="sky-lighting-label">天空照明</label>
+              <select class="sky-lighting">
+                <option value="0">无</option>
+                <option value="1">暗淡</option>
+                <option value="2">正常</option>
+              </select>
+            </div>
+            <div class="form-option form-option--select">
+              <label class="scaleFactor-label">规模</label>
+              <select class="scaleFactor">
+                <option value="0.50">50%</option>
+                <option value="0.62">62%</option>
+                <option value="0.75">75%</option>
+                <option value="0.90">90%</option>
+                <option value="1.00">100%</option>
+                <option value="1.50">150%</option>
+                <option value="2.00">200%</option>
+              </select>
+            </div>
+            <div class="form-option form-option--checkbox">
+              <label class="auto-launch-label">自动发射</label>
+              <input class="auto-launch" type="checkbox">
+            </div>
+            <div class="form-option form-option--checkbox form-option--finale-mode" style="opacity: 1;">
+              <label class="finale-mode-label">结局模式</label>
+              <input class="finale-mode" type="checkbox">
+            </div>
+            <div class="form-option form-option--checkbox">
+              <label class="hide-controls-label">隐藏控制器</label>
+              <input class="hide-controls" type="checkbox">
+            </div>
+            <div class="form-option form-option--checkbox form-option--fullscreen">
+              <label class="fullscreen-label">全屏</label>
+              <input class="fullscreen" type="checkbox">
+            </div>
+            <div class="form-option form-option--checkbox">
+              <label class="long-exposure-label">打开快门</label>
+              <input class="long-exposure" type="checkbox">
+            </div>
+          </form>
+
+          <div class="credits"><br>如果您觉得本项目给您带来了快乐，欢迎捐赠我们<br>
+            点击这里→ <a href="https://blog.qinglin.co/yanhua/1.html" target="_blank"><b>捐赠❤</b></a> <br>一分也是爱~<br>
+            LOVE ❤ by <a>青云依兮</a>.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="help-modal">
+      <div class="help-modal__overlay"></div>
+      <div class="help-modal__dialog">
+        <div class="help-modal__header"></div>
+        <div class="help-modal__body"></div>
+        <button type="button" class="help-modal__close-btn">关闭</button>
+      </div>
+    </div>
+  </div>
+  <!-- partial -->
+  <!-- <script src="1.js"></script> -->
+  <script src="2.js"></script>
+  <script src="mymath.js"></script> 
+  <script src="./script.js"></script>
+
+
+  <!-- <div class="swal-overlay" tabindex="-1">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+      <div class="swal-title" style="">使用方法</div>
+      <div class="swal-text" style="">1.你可以在右上角的“齿轮”设置烟花相关参数<br>2.用手或者鼠标横向滑动下边界可以调节燃放速度哦！点击屏幕可以控制燃放数量<br>3.电脑键盘快捷键： P-暂停
+        O-设置<br></div>
+      <div class="swal-footer">
+        <div class="swal-button-container">
+
+          <button class="swal-button swal-button--confirm">OK</button>
+
+          <div class="swal-button__loader">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div> -->
+</body>
+<div id="sc-translator-shadow" style="all: initial;"></div>
+
+</html>
